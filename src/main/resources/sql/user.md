@@ -1,0 +1,3 @@
+selectAll
+===
+select * from user
