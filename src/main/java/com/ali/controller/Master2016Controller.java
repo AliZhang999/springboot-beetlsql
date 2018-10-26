@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("master2016")
 public class Master2016Controller {
@@ -18,15 +21,15 @@ public class Master2016Controller {
     SQLManager master2016SQLManager;
 
     @GetMapping("sqlmanager/all")
-    public long getSqlManagerAll(){
-        long i = master2016SQLManager.allCount(Object.class);
-        return i;
+    public List<Map> getSqlManagerAll(){
+        List<Map> list = master2016SQLManager.select("master2016.selectAll",Map.class);
+        return list;
     }
 
     @GetMapping("repository/all")
-    public int getRepositoryAll(){
-        int i = master2016Repository.selectAll();
-        return i;
+    public List<Map> getRepositoryAll(){
+        List<Map> list = master2016Repository.selectAll();
+        return list;
     }
 
 }

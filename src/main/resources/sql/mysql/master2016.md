@@ -1,3 +1,3 @@
 selectAll
 ===
-select count(*) from 专业培养计划表
+select * from 专业培养计划表
