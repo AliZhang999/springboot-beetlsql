@@ -38,12 +38,13 @@ public class DataSourceConfig {
                 "spring.datasource.master2016.password");
     }
 
-    private SQLManager getSqlManager(Environment environment, String s, String s2, String s3, String s4) {
-        String driver = environment.getProperty(s);
-        String url = environment.getProperty(s2);
-        String username = environment.getProperty(s3);
-        String password = environment.getProperty(s4);
-        ConnectionSource source = ConnectionSourceHelper.getSimple(driver, url, username, password);
+    private SQLManager getSqlManager(DataSource dataSource) {
+//        String driver = environment.getProperty(s);
+//        String url = environment.getProperty(s2);
+//        String username = environment.getProperty(s3);
+//        String password = environment.getProperty(s4);
+//        ConnectionSource source = ConnectionSourceHelper.getSimple(driver, url, username, password);
+        ConnectionSource source = ConnectionSourceHelper.getSingle(dataSource);
         MySqlStyle style = new MySqlStyle();
         SQLManager sqlManager = new SQLManager(style, source);
         return sqlManager;
@@ -51,22 +52,12 @@ public class DataSourceConfig {
 
     @Bean("beetltestSQLManager")
     public SQLManager getBeetltestSQLManager(Environment environment){
-        return getSqlManager(environment,
-            "spring.datasource.driver-class-name",
-            "spring.datasource.url",
-            "spring.datasource.username",
-            "spring.datasource.password"
-        );
+        return getSqlManager(dataSource(environment));
     }
 
     @Bean("master2016SQLManager")
     public SQLManager getMaster2016SQLManager(Environment environment){
-        return getSqlManager(environment,
-            "spring.datasource.master2016.driver-class-name",
-            "spring.datasource.master2016.url",
-            "spring.datasource.master2016.username",
-            "spring.datasource.master2016.password"
-        );
+        return getSqlManager(master2016DataSource(environment));
     }
 
 }
