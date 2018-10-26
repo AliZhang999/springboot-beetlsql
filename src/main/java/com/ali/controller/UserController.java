@@ -1,27 +1,29 @@
 package com.ali.controller;
 
 import com.ali.bean.User;
-import com.ali.repository.UserRepository;
+import com.ali.repository.beetltest.UserRepository;
 import org.beetl.sql.core.SQLManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("beetltest")
 public class UserController {
-
-    @Autowired
-    SQLManager sqlManager;
 
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    SQLManager beetltestSQLManager;
+
     @GetMapping("sqlmanager/{id}")
     public User getSqlManagerUserById(@PathVariable("id") Integer id){
-        User user = sqlManager.single(User.class, id);
+        User user = beetltestSQLManager.single(User.class, id);
         return user;
     }
 
@@ -31,13 +33,13 @@ public class UserController {
         return user;
     }
 
-    @GetMapping("sqlmanager/md")
+    @GetMapping("sqlmanager/all")
     public List<User> findAllSqlmanagerUser(){
-        List<User> users = sqlManager.select("user.selectAll", User.class);
+        List<User> users = beetltestSQLManager.select("user.selectAll", User.class);
         return users;
     }
 
-    @GetMapping("repository/md")
+    @GetMapping("repository/all")
     public List<User> findAllRepositoryUser(){
         List<User> users = userRepository.selectAll();
         return users;
@@ -45,9 +47,9 @@ public class UserController {
 
     @GetMapping("gentoconsole")
     public void genToConsole() throws Exception {
-        sqlManager.genPojoCodeToConsole("user");
+        beetltestSQLManager.genPojoCodeToConsole("user");
         System.out.println("==============");
-        sqlManager.genSQLTemplateToConsole("user");
+        beetltestSQLManager.genSQLTemplateToConsole("user");
     }
 
 }

@@ -1,4 +1,4 @@
-package com.ali.repository;
+package com.ali.repository.beetltest;
 
 import com.ali.bean.User;
 import org.beetl.sql.core.annotatoin.SqlResource;
