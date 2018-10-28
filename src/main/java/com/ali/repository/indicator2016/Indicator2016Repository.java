@@ -9,4 +9,6 @@ import java.util.Map;
 @SqlResource("indicator2016")
 public interface Indicator2016Repository extends BaseMapper {
     List<Map> selectAll();
+
+    List<Map> select专业评估$七学生发展$7_1学生基本情况data();
 }
