@@ -22,12 +22,12 @@ public class DataSourceConfig {
         return hikariDataSource;
     }
 
-    @Bean(name = "datasource")
-    public DataSource dataSource(Environment environment){
+    @Bean(name = "beetltestdatasource")
+    public DataSource beetltestDataSource(Environment environment){
         return getDataSource(environment,
-                "spring.datasource.url",
-                "spring.datasource.username",
-                "spring.datasource.password");
+                "spring.datasource.beetltest.url",
+                "spring.datasource.beetltest.username",
+                "spring.datasource.beetltest.password");
     }
 
     @Bean(name = "master2016datasource")
@@ -38,12 +38,23 @@ public class DataSourceConfig {
                 "spring.datasource.master2016.password");
     }
 
+    @Bean(name = "master2017datasource")
+    public DataSource master2017DataSource(Environment environment){
+        return getDataSource(environment,
+                "spring.datasource.master2017.url",
+                "spring.datasource.master2017.username",
+                "spring.datasource.master2017.password");
+    }
+
+    @Bean(name = "indicator2016datasource")
+    public DataSource indicator2016DataSource(Environment environment){
+        return getDataSource(environment,
+                "spring.datasource.indicator2016.url",
+                "spring.datasource.indicator2016.username",
+                "spring.datasource.indicator2016.password");
+    }
+
     private SQLManager getSqlManager(DataSource dataSource) {
-//        String driver = environment.getProperty(s);
-//        String url = environment.getProperty(s2);
-//        String username = environment.getProperty(s3);
-//        String password = environment.getProperty(s4);
-//        ConnectionSource source = ConnectionSourceHelper.getSimple(driver, url, username, password);
         ConnectionSource source = ConnectionSourceHelper.getSingle(dataSource);
         MySqlStyle style = new MySqlStyle();
         SQLManager sqlManager = new SQLManager(style, source);
@@ -52,12 +63,22 @@ public class DataSourceConfig {
 
     @Bean("beetltestSQLManager")
     public SQLManager getBeetltestSQLManager(Environment environment){
-        return getSqlManager(dataSource(environment));
+        return getSqlManager(beetltestDataSource(environment));
     }
 
     @Bean("master2016SQLManager")
     public SQLManager getMaster2016SQLManager(Environment environment){
         return getSqlManager(master2016DataSource(environment));
+    }
+
+    @Bean("master2017SQLManager")
+    public SQLManager getMaster2017SQLManager(Environment environment){
+        return getSqlManager(master2017DataSource(environment));
+    }
+
+    @Bean("indicator2016SQLManager")
+    public SQLManager getIndicator2016SQLManager(Environment environment){
+        return getSqlManager(indicator2016DataSource(environment));
     }
 
 }
