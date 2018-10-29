@@ -1,6 +1,7 @@
 package com.ali.controller;
 
 import com.ali.repository.master2017.Master2017Repository;
+import io.swagger.annotations.Api;
 import org.beetl.sql.core.SQLManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("master2017")
+@Api("indicator2017数据接口")
 public class Master2017Controller {
 
     @Autowired
