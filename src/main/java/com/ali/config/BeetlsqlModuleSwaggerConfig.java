@@ -1,5 +1,6 @@
 package com.ali.config;
 
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -10,25 +11,25 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@Configuration
+@SpringBootConfiguration
 @EnableSwagger2
 public class BeetlsqlModuleSwaggerConfig {
     @Bean
-    public Docket master2016_api(){
+    public Docket subjectDataView_api(){
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("分析页")
-                .apiInfo(apiInfo())
+                .groupName("学科综合分析")
+                .apiInfo(apiInfo("学科数据总览","1.0",""))
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.ali.controller"))
-                .paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/subjectDataView/**"))
                 .build();
     }
 
-    private ApiInfo apiInfo(){
+    private ApiInfo apiInfo(String title,String version,String desc){
         return new ApiInfoBuilder()
-                .title("分析页接口")
-                .version("1.0")
-                .description("分析页接口详情")
+                .title(title)
+                .version(version)
+                .description(desc)
                 .build();
     }
 }

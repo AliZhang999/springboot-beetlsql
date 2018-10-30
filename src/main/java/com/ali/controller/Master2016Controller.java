@@ -13,7 +13,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("master2016")
-@Api("master2016数据接口")
 public class Master2016Controller {
 
     @Autowired

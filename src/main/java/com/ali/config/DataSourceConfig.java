@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.beetl.sql.core.ConnectionSource;
 import org.beetl.sql.core.ConnectionSourceHelper;
 import org.beetl.sql.core.SQLManager;
+import org.beetl.sql.core.UnderlinedNameConversion;
 import org.beetl.sql.core.db.MySqlStyle;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,12 +23,12 @@ public class DataSourceConfig {
         return hikariDataSource;
     }
 
-    @Bean(name = "beetltestdatasource")
-    public DataSource beetltestDataSource(Environment environment){
+    @Bean(name = "basedatasource")
+    public DataSource baseDataSource(Environment environment){
         return getDataSource(environment,
-                "spring.datasource.beetltest.url",
-                "spring.datasource.beetltest.username",
-                "spring.datasource.beetltest.password");
+                "spring.datasource.base.url",
+                "spring.datasource.base.username",
+                "spring.datasource.base.password");
     }
 
     @Bean(name = "master2016datasource")
@@ -61,9 +62,9 @@ public class DataSourceConfig {
         return sqlManager;
     }
 
-    @Bean("beetltestSQLManager")
-    public SQLManager getBeetltestSQLManager(Environment environment){
-        return getSqlManager(beetltestDataSource(environment));
+    @Bean("baseSQLManager")
+    public SQLManager getBaseSQLManager(Environment environment){
+        return getSqlManager(baseDataSource(environment));
     }
 
     @Bean("master2016SQLManager")

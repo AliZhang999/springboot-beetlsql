@@ -1,3 +1,0 @@
-selectAll
-===
-select * from user

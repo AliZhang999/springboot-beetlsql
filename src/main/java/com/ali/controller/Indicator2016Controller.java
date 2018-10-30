@@ -16,7 +16,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("indicator2016")
-@Api("indicator2016数据接口")
 public class Indicator2016Controller {
 
     @Autowired
@@ -26,10 +25,6 @@ public class Indicator2016Controller {
     SQLManager indicator2016SQLManager;
 
     @GetMapping("sqlmanager/all")
-    @ApiOperation(value = "专业评估$七学生发展$7_1学生基本情况")
-    @ApiResponses({
-            @ApiResponse(code = 404,message = "请求路劲不正确")
-    })
     public List<Map> getSqlManagerAll(){
         List<Map> list = indicator2016SQLManager.select("indicator2016.selectAll",Map.class);
         return list;
