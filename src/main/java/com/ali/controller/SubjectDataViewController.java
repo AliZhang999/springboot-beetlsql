@@ -3,6 +3,7 @@ package com.ali.controller;
 import com.google.gson.Gson;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javafx.beans.binding.ObjectExpression;
 import org.apache.commons.lang3.StringUtils;
 import org.beetl.sql.core.SQLManager;
 import org.beetl.sql.core.SQLReady;
@@ -54,40 +55,36 @@ public class SubjectDataViewController {
     @GetMapping("subjectSZJG/{subjectCode}")
     @ApiOperation(value = "学科师资结构数据")
     public Object getsubjectSZJG(@PathVariable("subjectCode") String subjectCode){
-        String code = subjectCode.substring(0,4);
 
         String project = "专业评估";
         String namespace = "四教师队伍";
         String name = "4.2.2专业课校内授课教师结构分析";
 
-        String tableName = StringUtils.join(new String[] { project, namespace, name }, '$').replaceAll("\\.", "_");
-
         Map<String,Object> paras = new HashMap<>();
-        paras.put("tableName",tableName);
+        paras.put("tableName",getIndicatorTableName(project,namespace,name));
         paras.put("year",2017);
         paras.put("schoolCode",10593);
 
-        Map data = new HashMap();
+        return getIndicatorDataByTableName(paras,subjectCode);
+    }
 
+
+    private Object getIndicatorDataByTableName(Map<String,Object> paras,String subjectCode){
+        Object data = null;
         List<Map> maps = indicator2016SQLManager.select("base.indicatorData", Map.class, paras);
         String script = maps.get(0).get("data").toString();
         Map map = new Gson().fromJson(script, Map.class);
         for (Object key : map.keySet()) {
-            Object o = map.get(key);
-            System.out.println(key+":=====>"+o);
-        }
-
-        /*if(obj instanceof List){
-            List<Map> list = (List<Map>) obj;
-            for(Map o : list){
-                if(o.get("专业代码").toString().equals(subjectCode)){
-                    data.put("schoolData", o);
-                    break;
-                }
+            if(key.equals(subjectCode)){
+                data = map.get(key);
+                break;
             }
-        }*/
-        
+        }
         return data;
+    }
+
+    private String getIndicatorTableName(String project, String namespace, String name){
+        return StringUtils.join(new String[] { project, namespace, name }, '$').replaceAll("\\.", "_");
     }
 
 
