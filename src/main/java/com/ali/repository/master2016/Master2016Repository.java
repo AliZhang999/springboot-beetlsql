@@ -8,5 +8,5 @@ import java.util.Map;
 
 @SqlResource("master2016")
 public interface Master2016Repository extends BaseMapper {
-    List<Map> selectAll();
+
 }

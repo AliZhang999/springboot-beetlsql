@@ -8,5 +8,5 @@ import java.util.List;
 
 @SqlResource("base")
 public interface BaseRepository extends BaseMapper<User> {
-    List<User> selectAll();
+
 }
