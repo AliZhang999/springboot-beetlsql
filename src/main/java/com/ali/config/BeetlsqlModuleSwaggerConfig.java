@@ -24,6 +24,28 @@ public class BeetlsqlModuleSwaggerConfig {
                 .build();
     }
 
+    @Bean
+    public Docket teacherInfo_api(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("教师画像")
+                .apiInfo(apiInfo("教师画像","1.0",""))
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/teacherInfo/**"))
+                .build();
+    }
+
+    @Bean
+    public Docket teachingStaff_api(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("师资队伍")
+                .apiInfo(apiInfo("师资队伍","1.0",""))
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/teachingStaff/**"))
+                .build();
+    }
+
     private ApiInfo apiInfo(String title,String version,String desc){
         return new ApiInfoBuilder()
                 .title(title)
