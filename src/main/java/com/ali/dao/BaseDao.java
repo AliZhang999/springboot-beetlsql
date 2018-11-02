@@ -16,4 +16,8 @@ public class BaseDao {
     public List<Map> getSubjectAssessment(Map<String, Object> map) {
         return baseSQLManager.select("base.subjectAssessment", Map.class, map);
     }
+
+    public List<Map> getAllSubject() {
+        return baseSQLManager.select("base.subjectType",Map.class);
+    }
 }

@@ -13,10 +13,6 @@ public class Master2017Dao {
     @Autowired
     SQLManager master2017SQLManager;
 
-    public List<Map> getAllSubject() {
-        return master2017SQLManager.select("master2017.allSubject", Map.class);
-    }
-
     public List<Map> get教师授课信息(Map<String, Object> paras) {
         return master2017SQLManager.select("common.获取教师授课信息", Map.class, paras);
     }
@@ -54,6 +50,22 @@ public class Master2017Dao {
     }
 
     public List<Map> get高层次人才统计() {
-        return master2017SQLManager.select("common.高层次人才统计",Map.class);
+        return master2017SQLManager.select("common.分专业高层次人才统计",Map.class);
+    }
+
+    public List<Map> get师资结构统计(){
+        return master2017SQLManager.select("common.分专业师资结构统计",Map.class);
+    }
+
+    public List<Map> get专职教师统计() {
+        return master2017SQLManager.select("master2017.分专业专职教师统计",Map.class);
+    }
+
+    public List<Map> get教学团队统计() {
+        return master2017SQLManager.select("common.分专业教学团队统计",Map.class);
+    }
+
+    public List<Map> get生源统计() {
+        return master2017SQLManager.select("master2016.分专业生源统计",Map.class);
     }
 }

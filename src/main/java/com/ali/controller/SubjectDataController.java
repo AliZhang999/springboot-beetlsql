@@ -1,7 +1,6 @@
 package com.ali.controller;
 
 import com.ali.service.SubjectDataService;
-import com.ali.util.IndicatorUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,20 +38,12 @@ public class SubjectDataController {
         return subjects.get(0);
     }
 
-    @GetMapping("subjectSZJG/{subjectCode}")
+    @GetMapping("subjectSZJG")
     @ApiOperation(value = "学科师资结构数据")
-    public Object getsubjectSZJG(@PathVariable("subjectCode") String subjectCode){
-
-        String project = "专业评估";
-        String namespace = "四教师队伍";
-        String name = "4.2.2专业课校内授课教师结构分析";
-
+    public Map<String,Map<String,Map<String,Object>>> get师资结构数据(String years){
         Map<String,Object> paras = new HashMap<>();
-        paras.put("tableName", IndicatorUtil.getIndicatorTableName(project,namespace,name));
-        paras.put("year",2017);
-        paras.put("schoolCode",10593);
-
-        return subjectDataService.getIndicatorDataByTableName(paras,subjectCode);
+        paras.put("years",years);
+        return subjectDataService.get师资结构数据(paras);
     }
 
 }

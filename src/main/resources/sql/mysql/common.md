@@ -34,7 +34,21 @@ select * from `教学成果奖` t where t.`教师工号`=#teacherCode#
 ===
 select j.`工号`,j.`姓名`,j.`性别`,j.`出生年月`,j.`任职状态`,j.`单位号`,j.`单位名称`,j.`聘期`,j.`学历`,j.`最高学位`,j.`专业技术职称`,z.`入校时间`,z.`学缘`,z.`任教类型`,z.`是否实验技术人员`,z.`是否双师型`,z.`是否工程背景`,z.`是否行业背景`,z.`学科类别`,z.`任教专业代码`,z.`任教专业名称`,z.`专业任教时间` from `教职工基本信息` j left join `在编教职工` z on j.`工号`=z.`工号` where j.`工号`=#teacherCode#
 
-高层次人才统计
+分专业师资结构统计
+===
+select x.专业代码,
+count(distinct case when y.专业技术职称 in ('教授','其他正高级') then y.工号 else null end) 正高级职称,
+count(distinct case when y.专业技术职称 in ('副教授','其他副高级') then y.工号 else null end) 副高级职称,
+count(distinct case when y.专业技术职称 in ('教授','其他正高级','副教授','其他副高级') then y.工号 else null end) 高级职称,
+count(distinct case when y.最高学位='博士' then y.工号 else null end) 博士学位 
+from (
+	select distinct 专业代码 from 专业基本情况 where 代码版本='2012'
+) x left join (
+	SELECT a.任教专业代码,a.工号,b.专业技术职称,b.最高学位 
+	FROM 在编教职工 a left JOIN 教职工基本信息 b ON a.工号=b.工号
+) y on x.专业代码=y.任教专业代码 group by x.专业代码
+
+分专业高层次人才统计
 ===
 select x.专业代码,count(y.工号) 高层次人才总数,
 count(distinct case when y.类型='中国科学院院士' then y.工号 else null end) 中国科学院院士,
@@ -59,4 +73,21 @@ from (
 ) x left join (
 	select distinct a.任教专业代码,b.工号,c.类型 from 在编教职工 a 
 	join 教职工基本信息 b on a.工号=b.工号 join 高层次人才 c on a.工号=c.工号
+) y on x.专业代码=y.任教专业代码 group by x.专业代码
+
+分专业教学团队统计
+===
+select x.专业代码,
+count(distinct case when y.类型='国家级教学团队' then y.工号 else null end) 国家级教学团队,
+count(distinct case when y.类型='省部级教学团队' then y.工号 else null end) 省部级教学团队,
+count(distinct case when y.类型='教育部创新团队' then y.工号 else null end) 教育部创新团队,
+count(distinct case when y.类型='国家自然科学基金委创新研究群体' then y.工号 else null end) 国家自然科学基金委创新研究群体,
+count(distinct case when y.类型='省级高层次研究团队' then y.工号 else null end) 省级高层次研究团队 
+from (
+	select distinct 专业代码 from 专业基本情况 where 代码版本='2012'
+) x left join (
+	select distinct a.任教专业代码,a.工号,c.类型 
+	from 在编教职工 a 
+	join 教职工基本信息 b on a.工号=b.工号 
+	join 高层次教学研究团队 c on a.工号=c.负责人工号
 ) y on x.专业代码=y.任教专业代码 group by x.专业代码
