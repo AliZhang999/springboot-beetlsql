@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -41,5 +42,13 @@ public class TeachingStaffController {
         Map<String,Object> paras = new HashMap<>();
         paras.put("years",years);
         return teachingStaffService.get教学团队统计(paras);
+    }
+
+    @GetMapping("studentSource")
+    @ApiOperation(value = "生源统计")
+    public Map<String,Map<String,Map<String,Map<String,Object>>>> 生源统计(String years){
+        Map<String,Object> paras = new HashMap<>();
+        paras.put("years",years);
+        return teachingStaffService.get生源统计(paras);
     }
 }

@@ -66,6 +66,6 @@ public class Master2017Dao {
     }
 
     public List<Map> get生源统计() {
-        return master2017SQLManager.select("master2016.分专业生源统计",Map.class);
+        return master2017SQLManager.select("master2017.分专业生源统计",Map.class);
     }
 }

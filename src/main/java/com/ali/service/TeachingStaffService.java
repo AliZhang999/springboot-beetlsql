@@ -98,4 +98,58 @@ public class TeachingStaffService {
 
         return endData;
     }
+
+    public Map<String,Map<String,Map<String,Map<String,Object>>>> get生源统计(Map<String, Object> paras){
+        String years = paras.get("years").toString();
+        String[] yearArr = years.split(",");
+        String[] items = {"招生计划数","实际录取数","第一志愿专业录取数","实际报到人数"};
+
+        Map<String,Map<String,Map<String,Map<String,Object>>>> endData = new HashMap<>();
+
+        for (String year : yearArr) {
+            List<Map> result = null;
+            if (year.equals("2016")){
+                result = master2016Dao.get生源统计();
+            }else if (year.equals("2017")){
+                result = master2017Dao.get生源统计();
+            }
+
+            Map<String,Map<String,Map<String,Object>>> data = new HashMap<>();
+
+            for (Map map : result) {
+                String 专业代码 = map.get("专业代码").toString();
+                String 学科代码 = 专业代码.substring(0, 4);
+                if(data.containsKey(学科代码)){
+                    Map<String, Map<String, Object>> 学科代码Map = data.get(学科代码);
+                    if(学科代码Map.containsKey(map.get("省份").toString())){
+                        Map<String, Object> 省份Map = 学科代码Map.get(map.get("省份").toString());
+                        for (String item : items) {
+                            Integer oldval =Integer.valueOf(省份Map.get(item).toString());
+                            Integer mapval = Integer.valueOf(map.get(item).toString());
+                            省份Map.put(item,oldval+mapval);
+                        }
+                    }else{
+                        Map<String,Object> c = new HashMap<>();
+                        for (String item : items) {
+                            Integer mapval = Integer.valueOf(map.get(item).toString());
+                            c.put(item,mapval);
+                        }
+                        学科代码Map.put(map.get("省份").toString(),c);
+                    }
+                }else{
+                    Map<String,Map<String,Object>> b = new HashMap<>();
+                    Map<String,Object> c = new HashMap<>();
+                    for (String item : items) {
+                        Integer mapval = Integer.valueOf(map.get(item).toString());
+                        c.put(item,mapval);
+                    }
+                    b.put(map.get("省份").toString(),c);
+                    data.put(学科代码,b);
+                }
+            }
+            endData.put(year,data);
+        }
+
+        return endData;
+    }
 }
