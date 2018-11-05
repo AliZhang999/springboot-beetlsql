@@ -91,3 +91,106 @@ from (
 	join 教职工基本信息 b on a.工号=b.工号 
 	join 高层次教学研究团队 c on a.工号=c.负责人工号
 ) y on x.专业代码=y.任教专业代码 group by x.专业代码
+
+分专业留学生统计
+===
+select x.专业代码,
+count(case when y.生源类别='留学生' then y.学号 else null end) 留学生数 
+from (
+	select 专业代码,校内代码 from 专业基本情况 where 代码版本='2012'
+) x left join (
+	select 校内专业代码,学号,生源类别 from 本科生基本情况 
+) y on x.校内代码=y.校内专业代码 group by x.专业代码
+
+分专业学生交流统计
+===
+select x.专业代码,
+ifnull(sum(y.本专业外出交流学生人数境外),0) 本专业到境外学生数,
+ifnull(sum(y.本专业外出交流学生人数境内),0) 本专业到境内学生数,
+ifnull(sum(y.到本专业交流学生人数境外),0) 境外到本专业学生数,
+ifnull(sum(y.到本专业交流学生人数境内),0) 境内到本专业学生数 
+from (
+	select 专业代码,校内代码 from 专业基本情况 where 代码版本='2012'
+) x left join (
+	select 校内专业代码,本专业外出交流学生人数境外,本专业外出交流学生人数境内,
+	到本专业交流学生人数境外,到本专业交流学生人数境内 from 本科生交流情况 
+) y on x.校内代码=y.校内专业代码 group by x.专业代码
+
+分专业毕业生统计
+===
+select x.专业代码,ifnull(sum(y.应届毕业生数),0) 应届毕业生数,
+ifnull(sum(y.应届生未按时毕业数),0) 应届未按时毕业生数 
+from (
+	select 专业代码,校内代码 from 专业基本情况 where 代码版本='2012'
+) x left join (
+	select 校内专业代码,应届毕业生数,应届生未按时毕业数 
+	from 应届本科毕业生分专业毕业就业情况
+) y on x.校内代码=y.校内专业代码 group by x.专业代码
+
+分专业学生获奖统计
+===
+select x.专业代码,
+count(case when y.获奖类别='国家级' then y.学号 else null end) 国家级获奖,
+count(case when y.获奖类别='国家级' and y.获奖等级='一等奖' then y.学号 else null end) 国家级一等奖,
+count(case when y.获奖类别='国家级' and y.获奖等级='二等奖' then y.学号 else null end) 国家级二等奖,
+count(case when y.获奖类别='国家级' and y.获奖等级='三等奖' then y.学号 else null end) 国家级三等奖,
+count(case when y.获奖类别='省部级' then y.学号 else null end) 省部级获奖,
+count(case when y.获奖类别='省部级' and y.获奖等级='一等奖' then y.学号 else null end) 省部级一等奖,
+count(case when y.获奖类别='省部级' and y.获奖等级='二等奖' then y.学号 else null end) 省部级二等奖,
+count(case when y.获奖类别='省部级' and y.获奖等级='三等奖' then y.学号 else null end) 省部级三等奖 
+from (
+	select 专业代码,校内代码 from 专业基本情况 where 代码版本='2012'
+) x left join (
+	select b.校内专业代码,a.学号,a.获奖类别,a.获奖等级 
+	from 学生获省级及以上各类竞赛奖励情况 a 
+	join 本科生基本情况 b on a.学号=b.学号
+) y on x.校内代码=y.校内专业代码 group by x.专业代码
+
+分专业教师获得科研奖励统计
+===
+select x.专业代码,
+count(distinct case when y.获奖等级='特等' then y.工号 else null end) 特等奖,
+count(distinct case when y.获奖等级='一等' then y.工号 else null end) 一等奖,
+count(distinct case when y.获奖等级='二等' then y.工号 else null end) 二等奖,
+count(distinct case when y.获奖等级='三等' then y.工号 else null end) 三等奖,
+count(distinct case when y.获奖类别='国家自然科学奖' then y.工号 else null end) 国家自然科学奖,
+count(distinct case when y.获奖类别='国家技术发明奖' then y.工号 else null end) 国家技术发明奖,
+count(distinct case when y.获奖类别='国家科技进步奖' then y.工号 else null end) 国家科技进步奖,
+count(distinct case when y.获奖类别='国家级人文社科奖' then y.工号 else null end) 国家级人文社科奖,
+count(distinct case when y.获奖类别='国家最高科学技术奖' then y.工号 else null end) 国家最高科学技术奖,
+count(distinct case when y.获奖类别='教育部高校科研成果奖（科学技术、人文社科）' then y.工号 else null end) 教育部高校科研成果奖（科学技术、人文社科）,
+count(distinct case when y.获奖类别='省（市、自治区）政府自然科学奖' then y.工号 else null end) 省（市、自治区）政府自然科学奖,
+count(distinct case when y.获奖类别='省（市、自治区）政府技术发明奖' then y.工号 else null end) 省（市、自治区）政府技术发明奖,
+count(distinct case when y.获奖类别='省（市、自治区）政府科技进步奖' then y.工号 else null end) 省（市、自治区）政府科技进步奖,
+count(distinct case when y.获奖类别='省（市、自治区）政府哲学社科奖' then y.工号 else null end) 省（市、自治区）政府哲学社科奖,
+count(distinct case when y.获奖类别='省（市、自治区）政府国际和国外奖励' then y.工号 else null end) 省（市、自治区）政府国际和国外奖励,
+count(distinct case when y.获奖类别='国际科学技术合作奖' then y.工号 else null end) 国际科学技术合作奖,
+count(distinct case when y.获奖类别='国家何梁何利科技奖' then y.工号 else null end) 国家何梁何利科技奖,
+count(distinct case when y.获奖类别='国际和国外奖励' then y.工号 else null end) 国际和国外奖励 
+from (
+	select 专业代码 from 专业基本情况 where 代码版本='2012'
+) x left join (
+	select distinct a.任教专业代码,a.工号,c.成果名称,c.获奖类别,c.获奖等级 
+	from 在编教职工 a 
+	join 教职工基本信息 b on a.工号=b.工号 
+	join 教师获得科研奖励情况 c on a.工号=c.工号
+) y on x.专业代码=y.任教专业代码 group by x.专业代码
+
+分专业教师专利授权统计
+===
+select a.专业代码,
+count(case when a.类型='发明专利' then a.工号 else null end) 发明专利,
+count(case when a.类型='实用新型专利' then a.工号 else null end) 实用新型专利,
+count(case when a.类型='外观专利' then a.工号 else null end) 外观专利,
+count(case when a.类型='著作权' then a.工号 else null end) 著作权 
+from (
+	select distinct x.专业代码,y.工号,y.类型,y.授权号 
+	from 专业基本情况 x 
+	join (
+		select distinct a.任教专业代码,a.工号,c.类型,c.授权号  
+		from 在编教职工 a 
+		join 教职工基本信息 b on a.工号=b.工号 
+		join 教师专利授权情况 c on a.工号=c.工号
+	) y on x.专业代码=y.任教专业代码 
+	where 代码版本='2012'
+) a group by a.专业代码

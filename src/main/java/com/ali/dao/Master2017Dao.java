@@ -68,4 +68,24 @@ public class Master2017Dao {
     public List<Map> get生源统计() {
         return master2017SQLManager.select("master2017.分专业生源统计",Map.class);
     }
+
+    public List<Map> get留学生统计() {
+        return master2017SQLManager.select("common.分专业留学生统计",Map.class);
+    }
+
+    public List<Map> get学生交流统计() {
+        return master2017SQLManager.select("common.分专业学生交流统计",Map.class);
+    }
+
+    public List<Map> get毕业生统计() {
+        return master2017SQLManager.select("common.分专业毕业生统计",Map.class);
+    }
+
+    public List<Map> get获奖统计() {
+        return master2017SQLManager.select("common.分专业学生获奖统计",Map.class);
+    }
+
+    public List<Map> get教师专利授权统计() {
+        return master2017SQLManager.select("common.分专业教师专利授权统计",Map.class);
+    }
 }

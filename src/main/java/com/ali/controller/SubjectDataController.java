@@ -31,9 +31,8 @@ public class SubjectDataController {
     @GetMapping("subjectAssessment/{subjectCode}")
     @ApiOperation(value = "学科评估结果")
     public Map getSubjectAssessment(@PathVariable("subjectCode") String subjectCode){
-        String code = subjectCode.substring(0,4);
         Map<String,Object> map = new HashMap<>();
-        map.put("code",code);
+        map.put("code",subjectCode);
         List<Map> subjects = subjectDataService.getSubjectAssessment(map);
         return subjects.get(0);
     }

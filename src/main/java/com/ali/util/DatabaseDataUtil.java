@@ -2,6 +2,7 @@ package com.ali.util;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,5 +33,29 @@ public class DatabaseDataUtil {
             }
         }
         return target;
+    }
+
+    public static double roundedUpTo2DecimalPlacesByDiv(Object obj1,Object obj2) {// return:str1/str2*100
+        double val1 = 0.0;
+        double val2 = 0.0;
+        if(!obj1.getClass().toString().equals(Double.class.toString())) {
+            val1 = Double.valueOf(obj1.toString());
+        }else {
+            val1 = (double) obj1;
+        }
+        if(!obj2.getClass().toString().equals(Double.class.toString())) {
+            val2 = Double.valueOf(obj2.toString());
+        }else {
+            val2 = (double) obj2;
+        }
+
+        double rate = 0.0;
+        if(val1 == 0.0 || val2 == 0.0) {
+            rate = 0.0;
+        }else {
+            rate = val1 / val2 * 100;
+        }
+        BigDecimal b = new BigDecimal(rate);
+        return b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 }

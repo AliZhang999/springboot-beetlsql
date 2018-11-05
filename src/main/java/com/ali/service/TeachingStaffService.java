@@ -152,4 +152,129 @@ public class TeachingStaffService {
 
         return endData;
     }
+
+    public Map<String, Map<String, Map<String, Object>>> get留学生统计(Map<String, Object> paras) {
+        String[] items = {"留学生数"};
+
+        String years = paras.get("years").toString();
+        String[] yearArr = years.split(",");
+
+        Map<String,Map<String,Map<String,Object>>> endData = new HashMap<>();
+
+        for (String year : yearArr) {
+            List<Map> result = null;
+            if (year.equals("2016")){
+                result = master2016Dao.get留学生统计();
+            }else if (year.equals("2017")){
+                result = master2017Dao.get留学生统计();
+            }
+
+            Map<String,Map<String,Object>> data = new HashMap<>();
+
+            endData.put(year,DatabaseDataUtil.analysisMajorDataBySubject(result,data,items));
+        }
+
+        return endData;
+    }
+
+    public Map<String, Map<String, Map<String, Object>>> get学生交流统计(Map<String, Object> paras) {
+        String[] items = {"本专业到境外学生数","本专业到境内学生数","境外到本专业学生数","境内到本专业学生数"};
+
+        String years = paras.get("years").toString();
+        String[] yearArr = years.split(",");
+
+        Map<String,Map<String,Map<String,Object>>> endData = new HashMap<>();
+
+        for (String year : yearArr) {
+            List<Map> result = null;
+            if (year.equals("2016")){
+                result = master2016Dao.get学生交流统计();
+            }else if (year.equals("2017")){
+                result = master2017Dao.get学生交流统计();
+            }
+
+            Map<String,Map<String,Object>> data = new HashMap<>();
+
+            endData.put(year,DatabaseDataUtil.analysisMajorDataBySubject(result,data,items));
+        }
+
+        return endData;
+    }
+
+    public Map<String, Map<String, Map<String, Object>>> get毕业生统计(Map<String, Object> paras) {
+        String[] items = {"应届毕业生数","应届未按时毕业生数"};
+
+        String years = paras.get("years").toString();
+        String[] yearArr = years.split(",");
+
+        Map<String,Map<String,Map<String,Object>>> endData = new HashMap<>();
+
+        for (String year : yearArr) {
+            List<Map> result = null;
+            if (year.equals("2016")){
+                result = master2016Dao.get毕业生统计();
+            }else if (year.equals("2017")){
+                result = master2017Dao.get毕业生统计();
+            }
+
+            Map<String,Map<String,Object>> data = new HashMap<>();
+            //计算学科毕业率
+            Map<String, Map<String,Object>> analysisData = DatabaseDataUtil.analysisMajorDataBySubject(result,data,items);
+            for (String key : analysisData.keySet()) {
+                Map<String,Object> mapval = analysisData.get(key);
+                Integer 应届毕业生数 = Integer.valueOf(mapval.get("应届毕业生数").toString());
+                Integer 应届未按时毕业生数 = Integer.valueOf(mapval.get("应届未按时毕业生数").toString());
+                mapval.put("毕业率", DatabaseDataUtil.roundedUpTo2DecimalPlacesByDiv(应届毕业生数, 应届毕业生数+应届未按时毕业生数));
+            }
+            endData.put(year,analysisData);
+        }
+
+        return endData;
+    }
+
+    public Map<String, Map<String, Map<String, Object>>> get获奖统计(Map<String, Object> paras) {
+        String[] items = {"国家级获奖","国家级一等奖","国家级二等奖","国家级三等奖","省部级获奖","省部级一等奖","省部级二等奖","省部级三等奖"};
+
+        String years = paras.get("years").toString();
+        String[] yearArr = years.split(",");
+
+        Map<String,Map<String,Map<String,Object>>> endData = new HashMap<>();
+
+        for (String year : yearArr) {
+            List<Map> result = null;
+            if (year.equals("2016")){
+                result = master2016Dao.get获奖统计();
+            }else if (year.equals("2017")){
+                result = master2017Dao.get获奖统计();
+            }
+
+            Map<String,Map<String,Object>> data = new HashMap<>();
+            endData.put(year,DatabaseDataUtil.analysisMajorDataBySubject(result,data,items));
+        }
+
+        return endData;
+    }
+
+    public Map<String, Map<String, Map<String, Object>>> get教师专利授权统计(Map<String, Object> paras) {
+        String[] items = {"发明专利","实用新型专利","外观专利","著作权"};
+
+        String years = paras.get("years").toString();
+        String[] yearArr = years.split(",");
+
+        Map<String,Map<String,Map<String,Object>>> endData = new HashMap<>();
+
+        for (String year : yearArr) {
+            List<Map> result = null;
+            if (year.equals("2016")){
+                result = master2016Dao.get教师专利授权统计();
+            }else if (year.equals("2017")){
+                result = master2017Dao.get教师专利授权统计();
+            }
+
+            Map<String,Map<String,Object>> data = new HashMap<>();
+            endData.put(year,DatabaseDataUtil.analysisMajorDataBySubject(result,data,items));
+        }
+
+        return endData;
+    }
 }
