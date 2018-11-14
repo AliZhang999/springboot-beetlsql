@@ -8,10 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class Master2016Dao {
-
+public class Master2016Dao{
     @Autowired
     SQLManager master2016SQLManager;
+
+    public List<Map> get教师列表() {
+        return master2016SQLManager.select("common.获取教师列表", Map.class);
+    }
+
+    public List<Map> get学科平台列表() {
+        return master2016SQLManager.select("common.获取学科平台列表", Map.class);
+    }
 
     public List<Map> get教师授课信息(Map<String, Object> paras) {
         return master2016SQLManager.select("common.获取教师授课信息", Map.class, paras);
@@ -82,10 +89,75 @@ public class Master2016Dao {
     }
 
     public List<Map> get获奖统计() {
-        return master2016SQLManager.select("common.分专业学生获奖统计",Map.class);
+        return master2016SQLManager.select("common.分专业教师获得科研奖励统计",Map.class);
     }
 
     public List<Map> get教师专利授权统计() {
         return master2016SQLManager.select("common.分专业教师专利授权统计",Map.class);
     }
+
+    public List<Map> get教师主编专业教材统计() {
+        return master2016SQLManager.select("common.分专业教师主编专业教材统计",Map.class);
+    }
+
+    public List<Map> get教师主持科研项目统计() {
+        return master2016SQLManager.select("common.分专业教师主持科研项目统计",Map.class);
+    }
+
+    public List<Map> get教师出版专著统计() {
+        return master2016SQLManager.select("common.分专业教师出版专著统计",Map.class);
+    }
+
+    public List<Map> get教师发表论文统计() {
+        return master2016SQLManager.select("common.分专业教师发表论文统计",Map.class);
+    }
+
+    public List<Map> get校内专业列表() {
+        return master2016SQLManager.select("common.校内专业列表",Map.class);
+    }
+
+    public List<Map> get专业基本信息(Map<String, Object> paras) {
+        return master2016SQLManager.select("common.专业基本信息", Map.class, paras);
+    }
+
+    public List<Map> get专业内教职工列表(Map<String, Object> paras) {
+        return master2016SQLManager.select("common.专业内教职工列表", Map.class, paras);
+    }
+
+    public List<Map> get专业内教学成果列表(Map<String, Object> paras) {
+        return master2016SQLManager.select("common.专业内教学成果列表", Map.class, paras);
+    }
+
+    public List<Map> get专业内开设课程列表(Map<String, Object> paras) {
+        return master2016SQLManager.select("common.专业内开设课程列表", Map.class, paras);
+    }
+
+    public List<Map> get专业内实习基地列表(Map<String, Object> paras) {
+        return master2016SQLManager.select("common.专业内实习基地列表", Map.class, paras);
+    }
+
+    public List<Map> get专业内本科生列表(Map<String, Object> paras) {
+        return master2016SQLManager.select("common.专业内本科生列表", Map.class, paras);
+    }
+
+    public List<Map> get专业内各类竞赛列表(Map<String, Object> paras) {
+        return master2016SQLManager.select("common.专业内各类竞赛列表", Map.class, paras);
+    }
+
+    public List<Map> get专业内专业比赛列表(Map<String, Object> paras) {
+        return master2016SQLManager.select("common.专业内专业比赛列表", Map.class, paras);
+    }
+
+    public List<Map> get专业内学术论文列表(Map<String, Object> paras) {
+        return master2016SQLManager.select("common.专业内学术论文列表", Map.class, paras);
+    }
+
+    public List<Map> get学生情况(Map<String, Object> paras) {
+        return master2016SQLManager.select("common.分专业学生情况", Map.class, paras);
+    }
+
+    public List<Map> get在校成果(Map<String, Object> paras) {
+        return master2016SQLManager.select("common.分专业在校成果", Map.class, paras);
+    }
+
 }

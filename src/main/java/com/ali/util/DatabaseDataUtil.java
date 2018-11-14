@@ -36,8 +36,8 @@ public class DatabaseDataUtil {
     }
 
     public static double roundedUpTo2DecimalPlacesByDiv(Object obj1,Object obj2) {// return:str1/str2*100
-        double val1 = 0.0;
-        double val2 = 0.0;
+        double val1;
+        double val2;
         if(!obj1.getClass().toString().equals(Double.class.toString())) {
             val1 = Double.valueOf(obj1.toString());
         }else {
@@ -49,7 +49,7 @@ public class DatabaseDataUtil {
             val2 = (double) obj2;
         }
 
-        double rate = 0.0;
+        double rate;
         if(val1 == 0.0 || val2 == 0.0) {
             rate = 0.0;
         }else {

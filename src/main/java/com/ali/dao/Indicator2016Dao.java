@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class Indicator2016Dao {
+public class Indicator2016Dao{
 
     @Autowired
     SQLManager indicator2016SQLManager;

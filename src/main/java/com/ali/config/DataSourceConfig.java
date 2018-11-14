@@ -4,7 +4,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.beetl.sql.core.ConnectionSource;
 import org.beetl.sql.core.ConnectionSourceHelper;
 import org.beetl.sql.core.SQLManager;
-import org.beetl.sql.core.UnderlinedNameConversion;
 import org.beetl.sql.core.db.MySqlStyle;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,9 +25,9 @@ public class DataSourceConfig {
     @Bean(name = "basedatasource")
     public DataSource baseDataSource(Environment environment){
         return getDataSource(environment,
-                "spring.datasource.base.url",
-                "spring.datasource.base.username",
-                "spring.datasource.base.password");
+                "spring.datasource.url",
+                "spring.datasource.username",
+                "spring.datasource.password");
     }
 
     @Bean(name = "master2016datasource")

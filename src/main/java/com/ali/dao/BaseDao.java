@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class BaseDao {
+public class BaseDao{
 
     @Autowired
     SQLManager baseSQLManager;

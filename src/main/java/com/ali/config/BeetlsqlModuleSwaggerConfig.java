@@ -36,6 +36,28 @@ public class BeetlsqlModuleSwaggerConfig {
     }
 
     @Bean
+    public Docket majorInfo_api(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("专业画像")
+                .apiInfo(apiInfo("专业画像","1.0",""))
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/majorInfo/**"))
+                .build();
+    }
+
+    @Bean
+    public Docket schoolInfo_api(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("学校画像")
+                .apiInfo(apiInfo("学校画像","1.0",""))
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/schoolInfo/**"))
+                .build();
+    }
+
+    @Bean
     public Docket teachingStaff_api(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("师资队伍")
@@ -43,6 +65,50 @@ public class BeetlsqlModuleSwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.ant("/teachingStaff/**"))
+                .build();
+    }
+
+    @Bean
+    public Docket personnelTraining_api(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("人才培养")
+                .apiInfo(apiInfo("人才培养","1.0",""))
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/personnelTraining/**"))
+                .build();
+    }
+
+    @Bean
+    public Docket platformBuilding_api(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("平台建设")
+                .apiInfo(apiInfo("平台建设","1.0",""))
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/platformBuilding/**"))
+                .build();
+    }
+
+    @Bean
+    public Docket researchAward_api(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("科研获奖")
+                .apiInfo(apiInfo("科研获奖","1.0",""))
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/researchAward/**"))
+                .build();
+    }
+
+    @Bean
+    public Docket subjectResearch_api(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("学科研究")
+                .apiInfo(apiInfo("学科研究","1.0",""))
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/subjectResearch/**"))
                 .build();
     }
 

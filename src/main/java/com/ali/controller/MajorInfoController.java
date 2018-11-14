@@ -1,5 +1,6 @@
 package com.ali.controller;
 
+import com.ali.service.MajorInfoService;
 import com.ali.service.TeacherInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,29 +14,29 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("teacherInfo")
-@Api(tags = "TeacherInfo")
-public class TeacherInfoController {
+@RequestMapping("majorInfo")
+@Api(tags = "MajorInfo")
+public class MajorInfoController {
 
     @Autowired
-    TeacherInfoService teacherInfoService;
+    MajorInfoService majorInfoService;
 
-    @GetMapping("getTeacherList")
-    @ApiOperation(value = "教师列表")
-    public List<Map> getTeacherList(String year){
+    @GetMapping("getMajorList")
+    @ApiOperation(value = "专业列表")
+    public List<Map> getMajorList(String year){
         Map<String,Object> paras = new HashMap<>();
         paras.put("year",year);
-        List<Map> teacherList = teacherInfoService.getTeacherList(paras);
-        return teacherList;
+        List<Map> majorList = majorInfoService.getMajorList(paras);
+        return majorList;
     }
 
-    @GetMapping("getTeacherInfo")
-    @ApiOperation(value = "教师画像")
-    public Map<String, List<Map>> getTeacherInfo(String year, String teacherCode){
+    @GetMapping("getMajorInfo")
+    @ApiOperation(value = "专业画像")
+    public Map<String, List<Map>> getMajorInfo(String year, String majorCode){
         Map<String,Object> paras = new HashMap<>();
-        paras.put("teacherCode", teacherCode);
+        paras.put("majorCode", majorCode);
         paras.put("year",year);
-        Map<String, List<Map>> teacherInfo = teacherInfoService.getTeacherInfo(paras);
-        return teacherInfo;
+        Map<String, List<Map>> majorInfo = majorInfoService.getMajorInfo(paras);
+        return majorInfo;
     }
 }
