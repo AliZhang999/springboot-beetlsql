@@ -1,5 +1,6 @@
 package com.ali.dao;
 
+import com.ali.entity.Option;
 import org.beetl.sql.core.SQLManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -159,6 +160,78 @@ public class Master2017Dao{
 
     public List<Map> get在校成果(Map<String, Object> paras) {
         return master2017SQLManager.select("common.分专业在校成果", Map.class, paras);
+    }
+
+    public List<Option> get专业技术职称指标类型() {
+        return master2017SQLManager.select("common.获取专业技术职称指标",Option.class);
+    }
+
+    public List<Option> get高层次人才指标类型() {
+        return master2017SQLManager.select("common.获取高层次人才指标",Option.class);
+    }
+
+    public List<Option> get教师情况指标类型() {
+        return master2017SQLManager.select("common.获取教师情况指标",Option.class);
+    }
+
+    public List<Option> get学历情况指标类型() {
+        return master2017SQLManager.select("common.获取学历情况指标",Option.class);
+    }
+
+    public List<Option> get最高学位指标类型() {
+        return master2017SQLManager.select("common.获取最高学位指标",Option.class);
+    }
+
+    public List<Option> get高层次研究团队指标类型() {
+        return master2017SQLManager.select("common.获取高层次研究团队指标",Option.class);
+    }
+
+    public List<Map> get专业技术职称指标趋势统计(Map<String,Object> paras){
+        return master2017SQLManager.select("common.专业技术职称指标趋势统计",Map.class,paras);
+    }
+
+    public List<Map> get专业技术职称指标对比统计(Map<String,Object> paras){
+        return master2017SQLManager.select("common.专业技术职称指标对比统计",Map.class,paras);
+    }
+
+    public List<Map> get教师情况指标趋势统计(Map<String,Object> paras){
+        return master2017SQLManager.select("common.教师情况指标趋势统计",Map.class,paras);
+    }
+
+    public List<Map> get教师情况指标对比统计(Map<String,Object> paras){
+        return master2017SQLManager.select("common.教师情况指标对比统计",Map.class,paras);
+    }
+
+    public List<Map> get学历情况指标趋势统计(Map<String,Object> paras){
+        return master2017SQLManager.select("common.学历情况指标对比统计",Map.class,paras);
+    }
+
+    public List<Map> get学历情况指标对比统计(Map<String,Object> paras){
+        return master2017SQLManager.select("common.学历情况指标对比统计",Map.class,paras);
+    }
+
+    public List<Map> get最高学位指标趋势统计(Map<String,Object> paras){
+        return master2017SQLManager.select("common.最高学位指标趋势统计",Map.class,paras);
+    }
+
+    public List<Map> get最高学位指标对比统计(Map<String,Object> paras){
+        return master2017SQLManager.select("common.最高学位指标对比统计",Map.class,paras);
+    }
+
+    public List<Map> get高层次人才指标趋势统计(Map<String,Object> paras){
+        return master2017SQLManager.select("common.高层次人才指标趋势统计",Map.class,paras);
+    }
+
+    public List<Map> get高层次人才指标对比统计(Map<String,Object> paras){
+        return master2017SQLManager.select("common.高层次人才指标对比统计",Map.class,paras);
+    }
+
+    public List<Map> get高层次研究团队指标趋势统计(Map<String,Object> paras){
+        return master2017SQLManager.select("common.高层次研究团队指标趋势统计",Map.class,paras);
+    }
+
+    public List<Map> get高层次研究团队指标对比统计(Map<String,Object> paras){
+        return master2017SQLManager.select("common.高层次研究团队指标对比统计",Map.class,paras);
     }
 
 }

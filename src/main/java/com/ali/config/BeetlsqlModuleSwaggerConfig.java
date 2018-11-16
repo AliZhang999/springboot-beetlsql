@@ -57,7 +57,7 @@ public class BeetlsqlModuleSwaggerConfig {
                 .build();
     }
 
-    @Bean
+    /*@Bean
     public Docket teachingStaff_api(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("师资队伍")
@@ -65,6 +65,17 @@ public class BeetlsqlModuleSwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.ant("/teachingStaff/**"))
+                .build();
+    }*/
+
+    @Bean
+    public Docket teachingStaff_api(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("师资队伍")
+                .apiInfo(apiInfo("师资队伍","1.0",""))
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/dynamicAnalysis/szdw/**"))
                 .build();
     }
 
