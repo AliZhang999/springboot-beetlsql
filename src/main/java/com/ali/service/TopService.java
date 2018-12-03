@@ -1,9 +1,6 @@
 package com.ali.service;
 
-import com.ali.dao.BaseDao;
-import com.ali.dao.Indicator2016Dao;
-import com.ali.dao.Master2016Dao;
-import com.ali.dao.Master2017Dao;
+import com.ali.dao.*;
 import com.ali.entity.Option;
 import com.ali.util.DatabaseDataUtil;
 import com.google.gson.Gson;
@@ -27,6 +24,12 @@ public class TopService {
 
     @Autowired
     Indicator2016Dao indicator2016Dao;
+
+    @Autowired
+    Master2016_14schoolDao master2016_14schoolDao;
+
+    @Autowired
+    Master2017_14schoolDao master2017_14schoolDao;
 
     public Map<String,Map<String, Map<String,Object>>> backSubjectData(Map<String, Object> paras, String[] items, String methodName) {
         String years = paras.get("years").toString();
@@ -66,19 +69,38 @@ public class TopService {
 
     public List<Map> getDataByMethodNameWithParams(String methodName,Map<String,Object> paras){
         String year = paras.get("year").toString();
+        if(methodName.equals("get科研水平")){
+            paras.remove("sqlNoParam");
+        }
         List<Map> result = null;
         try {
             if (year.equals("2016")){
-                if(paras.get("sqlNoParam") != null){
-                    result = (List<Map>) master2016Dao.getClass().getMethod(methodName,new Class[]{}).invoke(master2016Dao,new Object[]{});
+                if(paras.get("14school") != null){
+                    if(paras.get("sqlNoParam") != null){
+                        result = (List<Map>) master2016_14schoolDao.getClass().getMethod(methodName,new Class[]{}).invoke(master2016_14schoolDao,new Object[]{});
+                    }else{
+                        result = (List<Map>) master2016_14schoolDao.getClass().getMethod(methodName,new Class[]{Map.class}).invoke(master2016_14schoolDao,new Object[]{paras});
+                    }
                 }else{
-                    result = (List<Map>) master2016Dao.getClass().getMethod(methodName,new Class[]{Map.class}).invoke(master2016Dao,new Object[]{paras});
+                    if(paras.get("sqlNoParam") != null){
+                        result = (List<Map>) master2016Dao.getClass().getMethod(methodName,new Class[]{}).invoke(master2016Dao,new Object[]{});
+                    }else{
+                        result = (List<Map>) master2016Dao.getClass().getMethod(methodName,new Class[]{Map.class}).invoke(master2016Dao,new Object[]{paras});
+                    }
                 }
             }else if (year.equals("2017")){
-                if(paras.get("sqlNoParam") != null){
-                    result = (List<Map>) master2017Dao.getClass().getMethod(methodName,new Class[]{}).invoke(master2017Dao,new Object[]{});
+                if(paras.get("14school") != null){
+                    if(paras.get("sqlNoParam") != null){
+                        result = (List<Map>) master2017_14schoolDao.getClass().getMethod(methodName,new Class[]{}).invoke(master2017_14schoolDao,new Object[]{});
+                    }else{
+                        result = (List<Map>) master2017_14schoolDao.getClass().getMethod(methodName,new Class[]{Map.class}).invoke(master2017_14schoolDao,new Object[]{paras});
+                    }
                 }else{
-                    result = (List<Map>) master2017Dao.getClass().getMethod(methodName,new Class[]{Map.class}).invoke(master2017Dao,new Object[]{paras});
+                    if(paras.get("sqlNoParam") != null){
+                        result = (List<Map>) master2017Dao.getClass().getMethod(methodName,new Class[]{}).invoke(master2017Dao,new Object[]{});
+                    }else{
+                        result = (List<Map>) master2017Dao.getClass().getMethod(methodName,new Class[]{Map.class}).invoke(master2017Dao,new Object[]{paras});
+                    }
                 }
             }
         } catch (IllegalAccessException e) {
@@ -99,6 +121,10 @@ public class TopService {
         String script = maps.get(0).get("data").toString();
         Map map = new Gson().fromJson(script, Map.class);
         return map;
+    }
+
+    public List<Option> getSubjectList() {
+        return baseDao.getSubjectList();
     }
 
     public List<Option> getGroupTypeListByMethodName(String methodName, Map<String,Object> paras){

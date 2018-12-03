@@ -1,3 +1,3 @@
 indicatorData
 ===
-select data from #text(tableName)# where year = #year#
+    select data from #text(tableName)# where year = #year#

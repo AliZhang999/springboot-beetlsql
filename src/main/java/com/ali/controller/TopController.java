@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class TopController {
 
-    public List<Option> invokeOtpitonMethod(TopService service,String methodName,Map<String,Object> paras){
+    public List<Option> invokeOtpitonMethod(TopService service, String methodName, Map<String,Object> paras){
         List<Option> result = null;
         try{
             if(paras.isEmpty()){

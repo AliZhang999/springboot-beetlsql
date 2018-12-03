@@ -9,10 +9,6 @@ import java.util.Map;
 @Service
 public class DynamicAnalysisSZDWService extends TopService {
 
-    public List<Option> getSubjectList() {
-        return baseDao.getSubjectList();
-    }
-
     public List<Option> get专业技术职称指标类型(Map<String,Object> paras) {
         return getGroupTypeListByMethodName("get专业技术职称指标类型",paras);
     }

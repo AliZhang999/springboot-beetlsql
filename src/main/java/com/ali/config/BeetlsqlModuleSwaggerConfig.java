@@ -14,6 +14,28 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class BeetlsqlModuleSwaggerConfig {
     @Bean
+    public Docket homePage_api(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("首页")
+                .apiInfo(apiInfo("首页","1.0",""))
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/homePage/**"))
+                .build();
+    }
+
+    @Bean
+    public Docket subjectOverView_api(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("学科分析")
+                .apiInfo(apiInfo("学科分析","1.0",""))
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/subjectAnalysis/**"))
+                .build();
+    }
+
+    @Bean
     public Docket subjectDataView_api(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("学科综合分析")
